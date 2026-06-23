@@ -1,5 +1,7 @@
-﻿using ConferenceRooms.Application.Interfaces;
+﻿using ConferenceRooms.Application.Abstractions.Repositories;
+using ConferenceRooms.Application.Interfaces;
 using ConferenceRooms.Infrastracture.Context;
+using ConferenceRooms.Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -19,6 +21,14 @@ namespace ConferenceRooms.Infrastructure.Extensions
 			var connectionString = configuration.GetConnectionString("ConferenceBookingDb");
 			services.AddDbContext<IConferenceBookingDbContext, ConferenceBookingDbContext>(options =>
 				options.UseNpgsql(connectionString)); 
+
+			return services;
+		}
+
+		public static IServiceCollection AddInfrastructureServices(this IServiceCollection services) {
+
+			services.AddScoped<IHallRepository, HallRepository>();
+			services.AddScoped<IServiceRepository, ServiceRepository>();
 
 			return services;
 		}

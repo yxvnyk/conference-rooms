@@ -7,15 +7,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Controllers\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\ConferenceRooms.Infrastructure\ConferenceRooms.Infrastructure.csproj" />
 	  <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.0">
 		  <PrivateAssets>all</PrivateAssets>
 		  <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 	  </PackageReference>
+	  <PackageReference Include="Swashbuckle.AspNetCore" Version="9.0.1"></PackageReference>
   </ItemGroup>
 
 </Project>
