@@ -13,6 +13,10 @@ namespace ConferenceRooms.Infrastracture.Context
 
 		public DbSet<Service> Services { get; set; }
 
+		public DbSet<HallService> HallServices { get; set; }
+
+		public DbSet<BookingService> BookingServices { get; set; }
+
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
 		{
 			base.OnModelCreating(modelBuilder);

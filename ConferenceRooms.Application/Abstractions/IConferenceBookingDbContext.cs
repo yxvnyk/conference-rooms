@@ -11,6 +11,10 @@ namespace ConferenceRooms.Application.Interfaces
 		
 		DbSet<Booking> Bookings {get;}
 
+		DbSet<HallService> HallServices { get; }
+
+		DbSet<BookingService> BookingServices { get; }
+
 		Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
 	}
 }
