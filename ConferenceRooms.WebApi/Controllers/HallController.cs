@@ -14,12 +14,21 @@ namespace ConferenceRooms.WebApi.Controllers
 			this.hallService = hallService; 
 		}
 
+		[HttpGet]
+		public async Task<ActionResult> Get()
+		{
+
+			return Ok();
+		}
+
 		[HttpPost]
 		public async Task<ActionResult> Add(AddHallRequest request)
 		{
 			var hallId = await hallService.AddAsync(request);
 
-			return Ok(hallId);
+			var repsonse = new AddHallResponse(hallId);
+
+			return Ok(repsonse);
 		}
 
 		[HttpDelete]

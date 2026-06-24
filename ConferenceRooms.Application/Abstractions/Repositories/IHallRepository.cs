@@ -11,13 +11,17 @@ namespace ConferenceRooms.Application.Abstractions.Repositories
 	{
 		Task<Hall>? GetAsync();
 
-		Task CreateAsync(Hall hall);
+		Task AddAsync(Hall hall);
 
 		Task UpdateAsync(Hall hall);
 
 		Task RemoveAsync(Guid id);
 
 		Task<bool> ExistsByNameAsync(string name);
+
+		Task<bool> ExistsByIdAsync(Guid id);
+
+		Task<decimal> GetCostAsync(Guid id);
 
 	}
 }

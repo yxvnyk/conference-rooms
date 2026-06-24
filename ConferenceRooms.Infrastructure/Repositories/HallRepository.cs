@@ -13,7 +13,7 @@ namespace ConferenceRooms.Infrastructure.Repositories
 			this._context = conferenceBookingDbContext;
 		}
 
-		public async Task CreateAsync(Hall hall)
+		public async Task AddAsync(Hall hall)
 		{
 			await this._context.Halls.AddAsync(hall);
 			await this._context.SaveChangesAsync();
@@ -33,6 +33,15 @@ namespace ConferenceRooms.Infrastructure.Repositories
 		{
 			throw new NotImplementedException();
 		}
+		
+		public Task<decimal> GetCostAsync(Guid id)
+		{
+			return _context.Halls
+				.AsNoTracking()
+				.Where(x => x.Id == id)
+				.Select(x => x.Cost)
+				.FirstOrDefaultAsync(); ;
+		}
 
 		public Task UpdateAsync(Hall hall)
 		{
@@ -42,6 +51,11 @@ namespace ConferenceRooms.Infrastructure.Repositories
 		public async Task<bool> ExistsByNameAsync(string name)
 		{
 			return await _context.Halls.AnyAsync(x => x.Name == name);
+		}
+
+		public async Task<bool> ExistsByIdAsync(Guid id)
+		{
+			return await _context.Halls.AnyAsync(x => x.Id == id);
 		}
 	}
 }

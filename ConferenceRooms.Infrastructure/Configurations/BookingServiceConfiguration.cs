@@ -11,8 +11,8 @@ namespace ConferenceRooms.Infrastructure.Configurations
 			builder.ToTable("booking_services", t =>
 			{
 				t.HasCheckConstraint(
-					"CK_Booking_Services_PriceAtBooking",
-					"price_at_booking >= 0");
+					"CK_Booking_Services_LockedPrice",
+					"locked_price >= 0");
 			});
 
 			builder.HasKey(x => new { x.BookingId, x.ServiceId });
@@ -25,8 +25,8 @@ namespace ConferenceRooms.Infrastructure.Configurations
 				.HasColumnName("service_id")
 				.IsRequired();
 
-			builder.Property(x => x.Price)
-				.HasColumnName("price_at_booking")
+			builder.Property(x => x.LockedPrice)
+				.HasColumnName("locked_price")
 				.HasColumnType("decimal(10,2)")
 				.IsRequired();
 

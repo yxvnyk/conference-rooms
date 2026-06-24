@@ -6,9 +6,9 @@
 
 		public Guid HallId { get; set; }
 
-		public DateTime Start { get; set; }
+		public DateTime StartTime { get; set; }
 
-		public DateTime End { get; set; }
+		public DateTime EndTime { get; set; }
 
 		public decimal TotalPrice { get; set; }
 

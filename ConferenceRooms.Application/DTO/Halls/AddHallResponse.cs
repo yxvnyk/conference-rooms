@@ -1,0 +1,7 @@
+﻿using ConferenceRooms.Application.Validators;
+
+namespace ConferenceRooms.Application.DTO.Halls
+{
+	public record AddHallResponse(Guid Id);
+	
+}

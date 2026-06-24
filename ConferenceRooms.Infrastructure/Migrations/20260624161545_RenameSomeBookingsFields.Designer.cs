@@ -3,6 +3,7 @@ using System;
 using ConferenceRooms.Infrastracture.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace ConferenceRooms.Infrastructure.Migrations
 {
     [DbContext(typeof(ConferenceBookingDbContext))]
-    partial class ConferenceBookingDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260624161545_RenameSomeBookingsFields")]
+    partial class RenameSomeBookingsFields
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -29,9 +32,9 @@ namespace ConferenceRooms.Infrastructure.Migrations
                         .HasColumnType("uuid")
                         .HasColumnName("id");
 
-                    b.Property<DateTime>("EndTime")
-                        .HasColumnType("timestamp with time zone")
-                        .HasColumnName("end_time");
+                    b.Property<int>("DurationHours")
+                        .HasColumnType("integer")
+                        .HasColumnName("duration_hours");
 
                     b.Property<Guid>("HallId")
                         .HasColumnType("uuid")
@@ -49,12 +52,10 @@ namespace ConferenceRooms.Infrastructure.Migrations
 
                     b.HasIndex("HallId");
 
-                    b.HasIndex("HallId", "StartTime", "EndTime");
+                    b.HasIndex("HallId", "StartTime", "DurationHours");
 
                     b.ToTable("bookings", null, t =>
                         {
-                            t.HasCheckConstraint("CK_Bookings_Time", "end_time > start_time");
-
                             t.HasCheckConstraint("CK_Bookings_TotalPrice", "total_price >= 0");
                         });
                 });

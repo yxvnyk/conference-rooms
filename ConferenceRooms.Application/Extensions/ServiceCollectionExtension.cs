@@ -3,6 +3,7 @@ using ConferenceRooms.Application.Interfaces;
 using ConferenceRooms.Application.Services;
 using ConferenceRooms.Application.Validators;
 using FluentValidation;
+using FluentValidation.AspNetCore;
 using Mapster;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
@@ -13,8 +14,9 @@ namespace ConferenceRooms.Application.Extensions
 	{
 		public static IServiceCollection AddDtoValidators(this IServiceCollection services) {
 
-			// Automatically register all validators in the same assembly
-			services.AddValidatorsFromAssemblyContaining<HallServiceItemValidator>();
+			services.AddFluentValidationAutoValidation();
+			services.AddFluentValidationClientsideAdapters();
+			services.AddValidatorsFromAssemblyContaining<AddBookingRequestValidator>();
 
 			return services;
 		}
@@ -22,6 +24,7 @@ namespace ConferenceRooms.Application.Extensions
 
 			TypeAdapterConfig.GlobalSettings.Scan(Assembly.GetExecutingAssembly());
 			services.AddScoped<IHallService, HallService>();
+			services.AddScoped<IBookingService, BookingService>();
 
 			return services;
 		}

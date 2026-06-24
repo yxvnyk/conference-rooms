@@ -26,8 +26,7 @@ namespace ConferenceRooms.Application.Services
 
 			var hall = request.Adapt<Hall>();
 
-
-			await _hallRepository.CreateAsync(hall);
+			await _hallRepository.AddAsync(hall);
 
 			return hall.Id;
 		}

@@ -24,11 +24,11 @@ namespace ConferenceRooms.Infrastructure.Configurations
 				.HasColumnName("hall_id")
 				.IsRequired();
 
-			builder.Property(x => x.Start)
+			builder.Property(x => x.StartTime)
 				.HasColumnName("start_time")
 				.IsRequired();
 
-			builder.Property(x => x.End)
+			builder.Property(x => x.EndTime)
 				.HasColumnName("end_time")
 				.IsRequired();
 
@@ -49,7 +49,7 @@ namespace ConferenceRooms.Infrastructure.Configurations
 
 
 			builder.HasIndex(x => x.HallId);
-			builder.HasIndex(x => new { x.HallId, x.Start, x.End });
+			builder.HasIndex(x => new { x.HallId, x.StartTime, x.EndTime });
 		}
 	}
 }

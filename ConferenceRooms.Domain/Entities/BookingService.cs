@@ -6,7 +6,7 @@
 		
 		public Guid ServiceId { get; set; }
 		
-		public decimal Price { get; set; }
+		public decimal LockedPrice { get; set; }
 
 		public Booking Booking { get; set; } = null!;
 
