@@ -9,6 +9,8 @@
 
 		public decimal Cost { get; set; }
 
+		public bool IsDeleted { get; set; } = false;
+
 		public ICollection<Booking> Bookings { get; set; } = new List<Booking>();
 
 		public ICollection<HallService> HallServices { get; set; } = new List<HallService>();

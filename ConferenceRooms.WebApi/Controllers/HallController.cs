@@ -17,10 +17,16 @@ namespace ConferenceRooms.WebApi.Controllers
 		[HttpPost]
 		public async Task<ActionResult> Add(AddHallRequest request)
 		{
-			var hallId = await hallService.Add(request);
+			var hallId = await hallService.AddAsync(request);
 
-			// Возвращаем 201 Created с путем к новому объекту
-			return CreatedAtAction(nameof(Add), new { id = hallId }, new { Id = hallId });
+			return Ok(hallId);
+		}
+
+		[HttpDelete]
+		public async Task<ActionResult> Remove(Guid guid)
+		{
+			await hallService.RemoveAsync(guid);
+			return NoContent();
 		}
 	}
 }

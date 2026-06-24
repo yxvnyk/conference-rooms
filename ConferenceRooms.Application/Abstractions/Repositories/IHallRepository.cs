@@ -15,7 +15,7 @@ namespace ConferenceRooms.Application.Abstractions.Repositories
 
 		Task UpdateAsync(Hall hall);
 
-		Task DeleteAsync(Guid id);
+		Task RemoveAsync(Guid id);
 
 		Task<bool> ExistsByNameAsync(string name);
 

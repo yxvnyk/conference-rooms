@@ -19,9 +19,14 @@ namespace ConferenceRooms.Infrastructure.Repositories
 			await this._context.SaveChangesAsync();
 		}
 
-		public Task DeleteAsync(Guid id)
+		public async Task RemoveAsync(Guid id)
 		{
-			throw new NotImplementedException();
+			var hall = await this._context.Halls.FindAsync(id);
+			if (hall != null)
+			{
+				hall.IsDeleted = true;
+				await this._context.SaveChangesAsync();
+			}
 		}
 
 		public Task<Hall>? GetAsync()

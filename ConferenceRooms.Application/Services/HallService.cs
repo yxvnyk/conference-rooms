@@ -18,7 +18,7 @@ namespace ConferenceRooms.Application.Services
 			_serviceRepository = serviceRepository;
 		}
 
-		public async Task<Guid> Add(AddHallRequest request)
+		public async Task<Guid> AddAsync(AddHallRequest request)
 		{
 			await VerifyHallName(request.Name);
 
@@ -30,6 +30,11 @@ namespace ConferenceRooms.Application.Services
 			await _hallRepository.CreateAsync(hall);
 
 			return hall.Id;
+		}
+
+		public async Task RemoveAsync(Guid id)
+		{
+			await _hallRepository.RemoveAsync(id);
 		}
 
 		private async Task VerifyServiceIds(IReadOnlyCollection<HallServiceItem>? hallServiceItems)

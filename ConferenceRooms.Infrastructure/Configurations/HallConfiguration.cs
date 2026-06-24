@@ -21,6 +21,9 @@ namespace ConferenceRooms.Infrastructure.Configurations
 				.HasColumnName("id")
 				.IsRequired();
 
+			builder.Property(x => x.IsDeleted)
+				.HasColumnName("is_deleted");
+
 			builder.Property(x => x.Name)
 				.HasColumnName("name")
 				.HasMaxLength(100)
@@ -38,6 +41,9 @@ namespace ConferenceRooms.Infrastructure.Configurations
 
 			builder.HasIndex(x => x.Name)
 				.IsUnique();
+
+			// Allow us to upload only 'existed' records, so we don't need to filter in mannually 
+			builder.HasQueryFilter(h => !h.IsDeleted);
 		}
 	}
 }

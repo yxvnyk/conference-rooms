@@ -9,6 +9,8 @@ namespace ConferenceRooms.Application.Abstractions.Services
 {
 	public interface IHallService
 	{
-		Task<Guid> Add(AddHallRequest createHallRequest);
+		Task<Guid> AddAsync(AddHallRequest createHallRequest);
+
+		Task RemoveAsync(Guid id);
 	}
 }
