@@ -2,10 +2,13 @@ using ConferenceRooms.Application.Extensions;
 using ConferenceRooms.Infrastracture.Context;
 using ConferenceRooms.Infrastructure.Data;
 using ConferenceRooms.Infrastructure.Extensions;
+using ConferenceRooms.WebApi.Middlewares;
 using Microsoft.EntityFrameworkCore;
 
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddTransient<ExceptionHandlingMiddleware>();
 
 builder.Services.ConfigureDatabase(builder.Configuration);
 builder.Services.AddInfrastructureServices();
@@ -18,6 +21,8 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
+
+app.UseMiddleware<ExceptionHandlingMiddleware>();
 
 using (var scope = app.Services.CreateScope())
 {
