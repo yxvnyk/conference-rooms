@@ -1,5 +1,6 @@
 ﻿using ConferenceRooms.Application.Abstractions.Repositories;
 using ConferenceRooms.Application.Interfaces;
+using ConferenceRooms.Application.Queries;
 using ConferenceRooms.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 namespace ConferenceRooms.Infrastructure.Repositories
@@ -29,9 +30,25 @@ namespace ConferenceRooms.Infrastructure.Repositories
 			}
 		}
 
-		public Task<Hall>? GetAsync()
+		public async Task<IEnumerable<Hall>> GetAsync(HallQuery query)
 		{
-			throw new NotImplementedException();
+			var q = _context.Halls.AsQueryable();
+
+			if (query.Capacity > 0)
+				q = q.Where(x => x.Capacity >= query.Capacity);
+
+			if (query.StartTime.HasValue && query.EndTime.HasValue)
+			{
+				var start = query.StartTime.Value;
+				var end = query.EndTime.Value;
+
+				// TODO: прибрати костиль, та реалізувати Date і Time як окремі поля у базі
+				q = q.Where(x => !x.Bookings.Any(b =>
+					start <= b.EndTime &&
+					end >= b.StartTime));
+			}
+
+			return await q.ToListAsync();
 		}
 		
 		public Task<decimal> GetCostAsync(Guid id)
@@ -56,6 +73,11 @@ namespace ConferenceRooms.Infrastructure.Repositories
 		public async Task<bool> ExistsByIdAsync(Guid id)
 		{
 			return await _context.Halls.AnyAsync(x => x.Id == id);
+		}
+
+		public Task<Hall>? GetAsync()
+		{
+			throw new NotImplementedException();
 		}
 	}
 }

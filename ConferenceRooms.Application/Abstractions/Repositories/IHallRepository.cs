@@ -1,4 +1,5 @@
-﻿using ConferenceRooms.Domain.Entities;
+﻿using ConferenceRooms.Application.Queries;
+using ConferenceRooms.Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,6 +23,8 @@ namespace ConferenceRooms.Application.Abstractions.Repositories
 		Task<bool> ExistsByIdAsync(Guid id);
 
 		Task<decimal> GetCostAsync(Guid id);
+
+		Task<IEnumerable<Hall>> GetAsync(HallQuery query);
 
 	}
 }

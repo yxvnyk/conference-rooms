@@ -1,4 +1,5 @@
 ﻿using ConferenceRooms.Application.DTO.Halls;
+using ConferenceRooms.Application.Queries;
 using ConferenceRooms.Application.Validators;
 using ConferenceRooms.Domain.Entities;
 using Mapster;
@@ -25,6 +26,11 @@ namespace ConferenceRooms.Application.Mappings
 				.Map(dest => dest.ServiceId, src => src.ServiceId)
 				.Map(dest => dest.Price, src => src.Price)
 				.Ignore(dest => dest.HallId);
+
+			config.NewConfig<HallFilterRequest, HallQuery>()
+				.Map(dest => dest.Capacity, src => src.Capacity)
+				.Map(dest => dest.StartTime, src => src.StartTime)
+				.Map(dest => dest.EndTime, src => src.StartTime.AddHours(src.Duration));
 		}
 	}
 }

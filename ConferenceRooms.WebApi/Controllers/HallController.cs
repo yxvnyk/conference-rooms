@@ -15,10 +15,11 @@ namespace ConferenceRooms.WebApi.Controllers
 		}
 
 		[HttpGet]
-		public async Task<ActionResult> Get()
+		public async Task<ActionResult> Get([FromQuery] HallFilterRequest request)
 		{
+			var halls = await hallService.GetAsync(request);
 
-			return Ok();
+			return Ok(halls);
 		}
 
 		[HttpPost]

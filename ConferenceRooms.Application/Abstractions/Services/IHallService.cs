@@ -1,9 +1,5 @@
 ﻿using ConferenceRooms.Application.DTO.Halls;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using ConferenceRooms.Domain.Entities;
 
 namespace ConferenceRooms.Application.Abstractions.Services
 {
@@ -12,5 +8,7 @@ namespace ConferenceRooms.Application.Abstractions.Services
 		Task<Guid> AddAsync(AddHallRequest createHallRequest);
 
 		Task RemoveAsync(Guid id);
+
+		Task<IEnumerable<Hall>> GetAsync(HallFilterRequest request);
 	}
 }

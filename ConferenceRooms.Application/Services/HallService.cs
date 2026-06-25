@@ -2,6 +2,7 @@
 using ConferenceRooms.Application.Abstractions.Repositories;
 using ConferenceRooms.Application.Abstractions.Services;
 using ConferenceRooms.Application.DTO.Halls;
+using ConferenceRooms.Application.Queries;
 using ConferenceRooms.Application.Validators;
 using ConferenceRooms.Domain.Entities;
 using ConferenceRooms.Domain.Exceptions;
@@ -16,6 +17,15 @@ namespace ConferenceRooms.Application.Services
 		public HallService(IHallRepository hallRepository, IServiceRepository serviceRepository) {
 			_hallRepository = hallRepository;
 			_serviceRepository = serviceRepository;
+		}
+
+		public async Task<IEnumerable<Hall>> GetAsync(HallFilterRequest request)
+		{
+			var query = request.Adapt<HallQuery>();
+
+			var list = await _hallRepository.GetAsync(query);
+
+			return list;
 		}
 
 		public async Task<Guid> AddAsync(AddHallRequest request)
