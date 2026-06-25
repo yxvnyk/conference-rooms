@@ -25,6 +25,7 @@ namespace ConferenceRooms.Application.Extensions
 			TypeAdapterConfig.GlobalSettings.Scan(Assembly.GetExecutingAssembly());
 			services.AddScoped<IHallService, HallService>();
 			services.AddScoped<IBookingService, BookingService>();
+			services.AddScoped<IReportService, ReportService>();
 
 			return services;
 		}

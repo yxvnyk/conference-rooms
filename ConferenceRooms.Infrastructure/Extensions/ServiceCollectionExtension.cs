@@ -30,6 +30,7 @@ namespace ConferenceRooms.Infrastructure.Extensions
 			services.AddScoped<IServiceRepository, ServiceRepository>();
 			services.AddScoped<IBookingRepository, BookingRepository>();
 			services.AddScoped<IHallServiceRepository, HallServiceRepository>();
+			services.AddScoped<IReportRepository, ReportRepository>();
 
 			return services;
 		}
