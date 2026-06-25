@@ -28,6 +28,66 @@ namespace ConferenceRooms.Application.Services
 			return list;
 		}
 
+		public async Task<bool> UpdateAsync(Guid id, UpdateHallRequest request)
+		{
+			var hall = await _hallRepository.GetByIdWithHallServicesAsync(id);
+
+			if (hall is null)
+				return false;
+
+			UpdateBaseProperties(hall, request);
+			SyncServices(hall, request.ServiceItems);
+
+			await _hallRepository.SaveChangesAsync();
+
+			return true;
+		}
+
+		private static void UpdateBaseProperties(Hall hall, UpdateHallRequest request)
+		{
+			if (request.Capacity != null)
+			{
+				hall.Capacity = (int)request.Capacity;
+			}
+
+			if (request.Cost != null)
+			{
+				hall.Cost = (decimal)request.Cost;
+			}
+		}
+
+		private static void SyncServices(Hall hall, IReadOnlyCollection<HallServiceItem> incomingServices)
+		{
+			var incomingIds = incomingServices.Select(s => s.ServiceId).ToHashSet();
+
+			var servicesToRemove = hall.HallServices
+				.Where(existingService => !incomingIds.Contains(existingService.ServiceId))
+				.ToList(); 
+
+			foreach (var service in servicesToRemove)
+			{
+				hall.HallServices.Remove(service);
+			}
+
+			foreach (var incomingItem in incomingServices)
+			{
+				var existingService = hall.HallServices.FirstOrDefault(s => s.ServiceId == incomingItem.ServiceId);
+
+				if (existingService is not null)
+				{
+					existingService.Price = incomingItem.Price;
+				}
+				else
+				{
+					hall.HallServices.Add(new Domain.Entities.HallService
+					{
+						HallId = hall.Id,
+						ServiceId = incomingItem.ServiceId,
+						Price = incomingItem.Price
+					});
+				}
+			}
+		}
 		public async Task<Guid> AddAsync(AddHallRequest request)
 		{
 			await VerifyHallName(request.Name);

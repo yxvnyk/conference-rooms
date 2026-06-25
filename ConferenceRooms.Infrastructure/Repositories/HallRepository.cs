@@ -14,6 +14,18 @@ namespace ConferenceRooms.Infrastructure.Repositories
 			this._context = conferenceBookingDbContext;
 		}
 
+		public Task<Hall?> GetByIdWithHallServicesAsync(Guid id)
+		{
+			return _context.Halls
+				.Include(h => h.HallServices)
+				.FirstOrDefaultAsync(h => h.Id == id);
+		}
+
+		public Task SaveChangesAsync()
+		{
+			return _context.SaveChangesAsync();
+		}
+
 		public async Task AddAsync(Hall hall)
 		{
 			await this._context.Halls.AddAsync(hall);

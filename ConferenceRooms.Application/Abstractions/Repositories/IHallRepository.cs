@@ -1,5 +1,6 @@
 ﻿using ConferenceRooms.Application.Queries;
 using ConferenceRooms.Domain.Entities;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,6 +26,10 @@ namespace ConferenceRooms.Application.Abstractions.Repositories
 		Task<decimal> GetCostAsync(Guid id);
 
 		Task<IEnumerable<Hall>> GetAsync(HallQuery query);
+
+		Task<Hall?> GetByIdWithHallServicesAsync(Guid id);
+
+		Task SaveChangesAsync();
 
 	}
 }

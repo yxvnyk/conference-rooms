@@ -32,6 +32,19 @@ namespace ConferenceRooms.WebApi.Controllers
 			return Ok(repsonse);
 		}
 
+		[HttpPut("{id:guid}")]
+		public async Task<ActionResult> Update([FromRoute] Guid id, [FromBody] UpdateHallRequest request)
+		{
+			var isUpdated = await hallService.UpdateAsync(id, request);
+
+			if (!isUpdated)
+			{
+				return NotFound(new { Message = $"Hall with ID {id} d." });
+			}
+
+			return NoContent();
+		}
+
 		[HttpDelete]
 		public async Task<ActionResult> Remove(Guid guid)
 		{

@@ -10,5 +10,7 @@ namespace ConferenceRooms.Application.Abstractions.Services
 		Task RemoveAsync(Guid id);
 
 		Task<IEnumerable<Hall>> GetAsync(HallFilterRequest request);
+
+		Task<bool> UpdateAsync(Guid id, UpdateHallRequest request);
 	}
 }
